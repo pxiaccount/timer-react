@@ -2,6 +2,13 @@
 
 Timer created with React.
 
+## Screenshots
+Dark Theme:
+![image](./screenshots/dark_theme_example.png)
+<br>
+Light Theme:
+![image](./screenshots/light_theme_example.png)
+<br>
 ## Installation
 
 Clone the repository:
