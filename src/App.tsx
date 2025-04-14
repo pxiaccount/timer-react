@@ -9,6 +9,7 @@ function App() {
   })
   const [isRunning, setIsRunning] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
+  const [darkTheme, setDarkTheme] = useState(true)
   const intervalRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -72,48 +73,63 @@ function App() {
     setIsRunning(false)
   }
 
+  const toggleDarkTheme = () => {
+    setDarkTheme(!darkTheme)
+  }
+
   return (
     <>
-      <div>
-        <div>
-          <input
-            type="number"
-            name="hours"
-            min={0}
-            max={23}
-            value={time.hours}
-            onChange={handleChange}
-            disabled={isRunning}
-            style={{ width: '30px' }}
-          />
-          <input
-            type="number"
-            name="minutes"
-            min={0}
-            max={59}
-            value={time.minutes}
-            onChange={handleChange}
-            disabled={isRunning}
-            style={{ width: '30px' }}
-          />
-          <input
-            type="number"
-            name="seconds"
-            min={0}
-            max={59}
-            value={time.seconds}
-            onChange={handleChange}
-            disabled={isRunning}
-            style={{ width: '30px' }}
-          />
-        </div>
-        <div>
-          <button onClick={startTimer} disabled={isRunning}>
-            Start
+      <div className={`min-h-screen py-70 px-4 sm:px-7 lg:px-8 ${darkTheme ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+        <div className='max-w-200 mx-auto'>
+          <button
+            onClick={toggleDarkTheme}
+            className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+          >
+            {darkTheme ? '☀️' : '🌙'}
           </button>
-          <button onClick={stopTimer} disabled={!isRunning}>
-            Stop
-          </button>
+          <div className='flex flex-row justify-center items-center'>
+            <input
+              type="number"
+              name="hours"
+              min={0}
+              max={23}
+              value={time.hours}
+              onChange={handleChange}
+              disabled={isRunning}
+              style={{ width: '200px' }}
+              className={`border rounded-lg mx-2 text-9xl`}
+            />
+            <input
+              type="number"
+              name="minutes"
+              min={0}
+              max={59}
+              value={time.minutes}
+              onChange={handleChange}
+              disabled={isRunning}
+              style={{ width: '200px' }}
+              className={`border rounded-lg mx-2 text-9xl`}
+            />
+            <input
+              type="number"
+              name="seconds"
+              min={0}
+              max={59}
+              value={time.seconds}
+              onChange={handleChange}
+              disabled={isRunning}
+              style={{ width: '200px' }}
+              className={`border rounded-lg mx-2 text-9xl`}
+            />
+          </div>
+          <div className='w-200 flex flex-row justify-center items-center'>
+            <button onClick={startTimer} disabled={isRunning} className={`bg-blue-500 rounded-lg mx-2 p-1 my-2`}>
+              Start
+            </button>
+            <button onClick={stopTimer} disabled={!isRunning} className={`bg-blue-500 rounded-lg mx-2 p-1 my-2`}>
+              Stop
+            </button>
+          </div>
         </div>
       </div>
     </>
