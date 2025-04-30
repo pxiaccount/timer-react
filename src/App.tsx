@@ -9,7 +9,6 @@ function App() {
   })
   const [isRunning, setIsRunning] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
-  const [darkTheme, setDarkTheme] = useState(true)
   const intervalRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -66,6 +65,19 @@ function App() {
     }, 1000)
   }
 
+  const resetTimer = () => {
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+    setIsRunning(false)
+    setTime({
+      hours: '00',
+      minutes: '00',
+      seconds: '00'
+    })
+  }
+
   const stopTimer = () => {
     if (intervalRef.current === null) return
     clearInterval(intervalRef.current)
@@ -73,20 +85,10 @@ function App() {
     setIsRunning(false)
   }
 
-  const toggleDarkTheme = () => {
-    setDarkTheme(!darkTheme)
-  }
-
   return (
     <>
-      <div className={`min-h-screen py-70 px-4 sm:px-7 lg:px-8 ${darkTheme ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+      <div className={`min-h-screen py-20 px-4 sm:px-7 lg:px-8`}>
         <div className='max-w-200 mx-auto'>
-          <button
-            onClick={toggleDarkTheme}
-            className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            {darkTheme ? '☀️' : '🌙'}
-          </button>
           <div className='flex flex-row justify-center items-center'>
             <input
               type="number"
@@ -97,7 +99,7 @@ function App() {
               onChange={handleChange}
               disabled={isRunning}
               style={{ width: '200px' }}
-              className={`border rounded-lg mx-2 text-9xl`}
+              className={`mx-2 text-9xl`}
             />
             <input
               type="number"
@@ -108,7 +110,7 @@ function App() {
               onChange={handleChange}
               disabled={isRunning}
               style={{ width: '200px' }}
-              className={`border rounded-lg mx-2 text-9xl`}
+              className={`mx-2 text-9xl`}
             />
             <input
               type="number"
@@ -119,15 +121,18 @@ function App() {
               onChange={handleChange}
               disabled={isRunning}
               style={{ width: '200px' }}
-              className={`border rounded-lg mx-2 text-9xl`}
+              className={`mx-2 text-9xl`}
             />
           </div>
-          <div className='w-200 flex flex-row justify-center items-center'>
+          <div className='w-200 flex flex-row justify-center items-center text-white'>
             <button onClick={startTimer} disabled={isRunning} className={`bg-blue-500 rounded-lg mx-2 p-1 my-2`}>
               Start
             </button>
             <button onClick={stopTimer} disabled={!isRunning} className={`bg-blue-500 rounded-lg mx-2 p-1 my-2`}>
               Stop
+            </button>
+            <button onClick={resetTimer} className={`bg-blue-500 rounded-lg mx-2 p-1 my-2`}>
+              Reset
             </button>
           </div>
         </div>
